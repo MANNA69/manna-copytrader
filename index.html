@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MANNA COPY TRADER</title>
+  <link rel="icon" href="https://copytrader.tech/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="https://deriv.com/static/logos/deriv-white.svg" alt="Deriv Logo">
+    <div class="manna-logo">MANNA COPY TRADER</div>
+  </header>
+
+  <div class="login-container">
+    <button class="login-btn" onclick="loginWithDeriv()">Log in with Deriv</button>
+  </div>
+
+  <nav>
+    <button class="tab-button active" onclick="showTab('copy')">Copy Trader</button>
+    <button class="tab-button" onclick="showTab('log')">Logs</button>
+    <button class="tab-button" onclick="showTab('history')">History</button>
+  </nav>
+  <main>
+    <section id="copy" class="tab-content active">
+      <div class="card">
+        <div class="field">
+          <label for="master-token">Master Token</label>
+          <input type="text" id="master-token" placeholder="Enter Master Token">
+        </div>
+        <div class="field">
+          <label for="follower-token">Follower Token(s)</label>
+          <input type="text" id="follower-token" placeholder="Comma-separated follower tokens">
+        </div>
+        <button class="submit-btn" onclick="startCopying()">Start Copying</button>
+      </div>
+    </section>
+
+    <section id="log" class="tab-content">
+      <div class="card">
+        <div id="log-output"></div>
+      </div>
+    </section>
+
+    <section id="history" class="tab-content">
+      <div class="card">
+        <div id="history-output"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

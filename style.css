@@ -1,0 +1,104 @@
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background: #1b1f27;
+  color: #fff;
+}
+
+header {
+  background: #111;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header img {
+  height: 30px;
+}
+
+.manna-logo {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #B78007;
+}
+
+nav {
+  background: #222;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  color: #ccc;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  color: #fff;
+  border-bottom: 2px solid #B78007;
+}
+
+main {
+  padding: 2rem;
+}
+
+.card {
+  background: #2a2f3a;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.field input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+}
+
+.submit-btn {
+  background: #B78007;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background: #a76f06;
+}
+
+.login-container {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.login-btn {
+  background-color: #B78007;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+.login-btn:hover {
+  background-color: #a76f06;
+}
