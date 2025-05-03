@@ -1,3 +1,4 @@
+
 function showTab(tab) {
   document.querySelectorAll('.tab-content').forEach(section => section.classList.remove('active'));
   document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
@@ -9,6 +10,12 @@ function log(message) {
   const output = document.getElementById("log-output");
   output.innerHTML += `<p>${new Date().toLocaleTimeString()} - ${message}</p>`;
   output.scrollTop = output.scrollHeight;
+}
+
+function loginWithDeriv() {
+  const app_id = 72379;
+  const redirect_uri = "https://manna69.github.io/manna-copytrader/";
+  window.location.href = `https://oauth.deriv.com/oauth2/authorize?app_id=${app_id}&redirect_uri=${redirect_uri}`;
 }
 
 function startCopying() {
@@ -30,47 +37,8 @@ function startCopying() {
     const data = JSON.parse(event.data);
     if (data.msg_type === "authorize") {
       log("Master account authorized.");
-      masterSocket.send(JSON.stringify({ subscribe: 1, proposal_open_contract: 1 }));
-    } else if (data.msg_type === "proposal_open_contract") {
-      const contract = data.proposal_open_contract;
-      if (contract.is_sold) {
-        const trade = {
-          buy: 1,
-          price: contract.buy_price,
-          parameters: {
-            amount: contract.buy_price,
-            basis: "stake",
-            contract_type: contract.contract_type,
-            currency: contract.currency,
-            symbol: contract.underlying,
-            duration: contract.duration,
-            duration_unit: contract.duration_unit,
-            barrier: contract.barrier,
-            barrier2: contract.barrier2,
-            date_start: contract.date_start
-          }
-        };
-
-        followerTokens.forEach((token, idx) => {
-          const socket = followerSockets[idx];
-          socket.onopen = () => socket.send(JSON.stringify({ authorize: token }));
-          socket.onmessage = msgEvent => {
-            const res = JSON.parse(msgEvent.data);
-            if (res.msg_type === "authorize") {
-              socket.send(JSON.stringify(trade));
-              log(`Trade sent to follower: ${token.slice(0, 5)}***`);
-            }
-          };
-        });
-      }
     }
   };
-}
-
-function loginWithDeriv() {
-  const app_id = 72379;
-  const redirect_uri = window.location.origin + window.location.pathname;
-  window.location.href = \`https://oauth.deriv.com/oauth2/authorize?app_id=\${app_id}&redirect_uri=\${redirect_uri}\`;
 }
 
 window.onload = () => {
