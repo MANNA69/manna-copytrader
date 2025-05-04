@@ -1,53 +1,777 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MANNA COPY TRADER</title>
-  <link rel="icon" href="https://copytrader.tech/favicon.ico" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANNA COPY TRADER</title>
+    <style>
+        :root {
+            --primary: #f59e0b;
+            --primary-hover: #d97706;
+            --destructive: #ef4444;
+            --destructive-hover: #dc2626;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --background: #ffffff;
+            --foreground: #020817;
+            --card: #ffffff;
+            --card-foreground: #020817;
+            --border: #e2e8f0;
+            --input: #e2e8f0;
+            --ring: #94a3b8;
+            --muted: #f1f5f9;
+            --muted-foreground: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo {
+            height: 32px;
+        }
+
+        .app-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .tabs {
+            margin-bottom: 1rem;
+        }
+
+        .tab-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-trigger {
+            padding: 0.75rem;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .tab-trigger.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .badge-success {
+            background-color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: var(--warning);
+        }
+
+        .badge-error {
+            background-color: var(--error);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--input);
+            border-radius: 0.25rem;
+            font-size: 1rem;
+        }
+
+        .form-help {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-top: 0.25rem;
+        }
+
+        .slider-container {
+            padding: 1rem 0;
+        }
+
+        .slider {
+            width: 100%;
+            height: 5px;
+            border-radius: 5px;
+            background: var(--muted);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.25rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .button-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .button-destructive {
+            background-color: var(--destructive);
+            color: white;
+        }
+
+        .button-destructive:hover {
+            background-color: var(--destructive-hover);
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .alert-destructive {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--destructive);
+            color: var(--destructive);
+        }
+
+        .alert-icon {
+            margin-right: 0.5rem;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .logs-container {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 0.25rem;
+            padding: 1rem;
+            background-color: #000;
+            color: #4ade80;
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
+
+        .log-entry {
+            margin-bottom: 0.25rem;
+        }
+
+        .log-timestamp {
+            color: #94a3b8;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .history-table th {
+            background-color: var(--muted);
+            font-weight: 500;
+        }
+
+        .history-table tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .history-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .badge-buy {
+            background-color: var(--success);
+        }
+
+        .badge-sell {
+            background-color: var(--destructive);
+        }
+
+        @media (max-width: 640px) {
+            .tab-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <img src="https://deriv.com/static/logos/deriv-white.svg" alt="Deriv Logo">
-    <div class="manna-logo">MANNA COPY TRADER</div>
-  </header>
-  <nav>
-    <button class="tab-button active" onclick="showTab('copy')">Copy Trader</button>
-    <button class="tab-button" onclick="showTab('log')">Logs</button>
-    <button class="tab-button" onclick="showTab('history')">History</button>
-    <button class="tab-button" onclick="loginWithDeriv()">Log in with Deriv</button>
-  </nav>
-  <main>
-    <section id="copy" class="tab-content active">
-      <div class="card">
-        <div class="field">
-          <label for="master-token">Master Token</label>
-          <input type="text" id="master-token" placeholder="Enter Master Token">
+    <div class="container">
+        <header>
+            <div>
+                <img src="https://deriv.com/static/deriv-logo-0c7c71d2b6f7eb886c46c2c8a37933b8.svg" alt="Deriv Logo" class="logo">
+            </div>
+            <h1 class="app-title">MANNA COPY TRADER</h1>
+        </header>
+
+        <div class="tabs">
+            <div class="tab-list">
+                <button class="tab-trigger active" data-tab="copy-trader">Copy Trader</button>
+                <button class="tab-trigger" data-tab="logs">Logs</button>
+                <button class="tab-trigger" data-tab="history">History</button>
+            </div>
+
+            <div class="tab-content active" id="copy-trader">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Copy Trading Configuration</h2>
+                        <p class="card-description">Enter your API tokens and configure copy trading settings</p>
+                        <div id="connection-status"></div>
+                    </div>
+                    <div class="card-content">
+                        <div id="error-container"></div>
+
+                        <div class="form-group">
+                            <label for="master-token" class="form-label">Master Token</label>
+                            <input type="text" id="master-token" class="form-input" placeholder="Enter Master Token">
+                            <p class="form-help">The API token for the account you want to copy trades from</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="follower-tokens" class="form-label">Follower Token(s)</label>
+                            <input type="text" id="follower-tokens" class="form-input" placeholder="Comma-separated follower tokens">
+                            <p class="form-help">API tokens for accounts that will copy trades, separated by commas</p>
+                        </div>
+
+                        <div class="form-group slider-container">
+                            <label for="copy-ratio" class="form-label">Copy Ratio: <span id="copy-ratio-value">1.0</span>x</label>
+                            <input type="range" id="copy-ratio" class="slider" min="0.1" max="2" step="0.1" value="1">
+                            <p class="form-help">Multiplier for stake amount (e.g., 0.5x = half the stake, 2x = double the stake)</p>
+                        </div>
+
+                        <div class="form-group slider-container">
+                            <label for="max-stake" class="form-label">Maximum Stake: $<span id="max-stake-value">100</span></label>
+                            <input type="range" id="max-stake" class="slider" min="10" max="1000" step="10" value="100">
+                            <p class="form-help">Maximum stake amount for any copied trade</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button id="toggle-copying" class="button button-primary">Start Copying</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="logs">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Activity Logs</h2>
+                        <p class="card-description">Real-time logs of copy trading activity</p>
+                    </div>
+                    <div class="card-content">
+                        <div id="logs-container" class="logs-container">
+                            <p>No logs yet. Start copy trading to see activity.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="history">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Trade History</h2>
+                        <p class="card-description">History of copied trades</p>
+                    </div>
+                    <div class="card-content">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Action</th>
+                                    <th>Symbol</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-table-body">
+                                <tr>
+                                    <td colspan="4" style="text-align: center;">No trade history yet</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="field">
-          <label for="follower-token">Follower Token(s)</label>
-          <input type="text" id="follower-token" placeholder="Comma-separated follower tokens">
-        </div>
-        <button class="submit-btn" onclick="startCopying()">Start Copying</button>
-      </div>
-    </section>
+    </div>
 
-    <section id="log" class="tab-content">
-      <div class="card">
-        <div id="log-output"></div>
-      </div>
-    </section>
+    <script>
+        // Application state
+        const state = {
+            masterToken: '',
+            followerTokens: '',
+            isConnected: false,
+            isCopying: false,
+            connectionStatus: 'disconnected',
+            logs: [],
+            history: [],
+            error: null,
+            copyRatio: 1,
+            maxStake: 100,
+            masterSocket: null,
+            followerSockets: {}
+        };
 
-    <section id="history" class="tab-content">
-      <div class="card">
-        <div id="history-output"></div>
-      </div>
-    </section>
-  </main>
+        // DOM elements
+        const elements = {
+            tabTriggers: document.querySelectorAll('.tab-trigger'),
+            tabContents: document.querySelectorAll('.tab-content'),
+            masterTokenInput: document.getElementById('master-token'),
+            followerTokensInput: document.getElementById('follower-tokens'),
+            copyRatioSlider: document.getElementById('copy-ratio'),
+            copyRatioValue: document.getElementById('copy-ratio-value'),
+            maxStakeSlider: document.getElementById('max-stake'),
+            maxStakeValue: document.getElementById('max-stake-value'),
+            toggleCopyingButton: document.getElementById('toggle-copying'),
+            connectionStatus: document.getElementById('connection-status'),
+            errorContainer: document.getElementById('error-container'),
+            logsContainer: document.getElementById('logs-container'),
+            historyTableBody: document.getElementById('history-table-body')
+        };
 
-  <script src="script.js"></script>
+        // Initialize the application
+        function init() {
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Update UI based on initial state
+            updateUI();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Tab switching
+            elements.tabTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const tabId = trigger.dataset.tab;
+                    switchTab(tabId);
+                });
+            });
+
+            // Input changes
+            elements.masterTokenInput.addEventListener('input', (e) => {
+                state.masterToken = e.target.value;
+            });
+
+            elements.followerTokensInput.addEventListener('input', (e) => {
+                state.followerTokens = e.target.value;
+            });
+
+            // Slider changes
+            elements.copyRatioSlider.addEventListener('input', (e) => {
+                state.copyRatio = parseFloat(e.target.value);
+                elements.copyRatioValue.textContent = state.copyRatio.toFixed(1);
+            });
+
+            elements.maxStakeSlider.addEventListener('input', (e) => {
+                state.maxStake = parseInt(e.target.value);
+                elements.maxStakeValue.textContent = state.maxStake;
+            });
+
+            // Toggle copying button
+            elements.toggleCopyingButton.addEventListener('click', () => {
+                if (state.isCopying) {
+                    stopCopying();
+                } else {
+                    startCopying();
+                }
+            });
+        }
+
+        // Switch between tabs
+        function switchTab(tabId) {
+            elements.tabTriggers.forEach(trigger => {
+                trigger.classList.toggle('active', trigger.dataset.tab === tabId);
+            });
+
+            elements.tabContents.forEach(content => {
+                content.classList.toggle('active', content.id === tabId);
+            });
+        }
+
+        // Update UI based on current state
+        function updateUI() {
+            // Update connection status badge
+            let statusHTML = '';
+            if (state.connectionStatus === 'connected') {
+                statusHTML = '<span class="badge badge-success">Connected</span>';
+            } else if (state.connectionStatus === 'connecting') {
+                statusHTML = '<span class="badge badge-warning">Connecting...</span>';
+            } else if (state.connectionStatus === 'error') {
+                statusHTML = '<span class="badge badge-error">Connection Error</span>';
+            }
+            elements.connectionStatus.innerHTML = statusHTML;
+
+            // Update error message
+            if (state.error) {
+                elements.errorContainer.innerHTML = `
+                    <div class="alert alert-destructive">
+                        <svg class="alert-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <div>
+                            <div class="alert-title">Error</div>
+                            <div class="alert-description">${state.error}</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                elements.errorContainer.innerHTML = '';
+            }
+
+            // Update button text
+            elements.toggleCopyingButton.textContent = state.isCopying ? 'Stop Copying' : 'Start Copying';
+            elements.toggleCopyingButton.className = state.isCopying ? 'button button-destructive' : 'button button-primary';
+
+            // Disable inputs when copying
+            elements.masterTokenInput.disabled = state.isCopying;
+            elements.followerTokensInput.disabled = state.isCopying;
+            elements.copyRatioSlider.disabled = state.isCopying;
+            elements.maxStakeSlider.disabled = state.isCopying;
+
+            // Update logs
+            updateLogs();
+
+            // Update history
+            updateHistory();
+        }
+
+        // Update logs display
+        function updateLogs() {
+            if (state.logs.length === 0) {
+                elements.logsContainer.innerHTML = '<p>No logs yet. Start copy trading to see activity.</p>';
+            } else {
+                elements.logsContainer.innerHTML = state.logs.map(log => {
+                    return `
+                        <div class="log-entry">
+                            <span class="log-timestamp">[${new Date().toLocaleTimeString()}]</span> ${log}
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        // Update history display
+        function updateHistory() {
+            if (state.history.length === 0) {
+                elements.historyTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align: center;">No trade history yet</td>
+                    </tr>
+                `;
+            } else {
+                elements.historyTableBody.innerHTML = state.history.map(entry => {
+                    return `
+                        <tr>
+                            <td>${new Date(entry.time).toLocaleString()}</td>
+                            <td><span class="badge badge-${entry.action === 'buy' ? 'buy' : 'sell'}">${entry.action}</span></td>
+                            <td>${entry.symbol}</td>
+                            <td>$${entry.amount}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+
+        // Add a log entry
+        function addLog(message) {
+            state.logs = [message, ...state.logs].slice(0, 100);
+            updateLogs();
+        }
+
+        // Add a history entry
+        function addHistory(entry) {
+            state.history = [entry, ...state.history].slice(0, 100);
+            updateHistory();
+        }
+
+        // Connect to Deriv API
+        function connectToDerivAPI(token) {
+            return new Promise((resolve, reject) => {
+                const socket = new WebSocket('wss://ws.binaryws.com/websockets/v3?app_id=1089');
+
+                socket.onopen = () => {
+                    // Authorize with token
+                    socket.send(JSON.stringify({
+                        authorize: token
+                    }));
+                };
+
+                socket.onmessage = (msg) => {
+                    const data = JSON.parse(msg.data);
+
+                    // Handle authorization response
+                    if (data.msg_type === 'authorize') {
+                        if (data.error) {
+                            addLog(`Authorization failed: ${data.error.message}`);
+                            reject(new Error(data.error.message));
+                            socket.close();
+                        } else {
+                            addLog(`Successfully authorized account: ${data.authorize.email}`);
+                            resolve(socket);
+                        }
+                    }
+                };
+
+                socket.onerror = (error) => {
+                    addLog(`WebSocket error: ${error}`);
+                    reject(error);
+                };
+
+                socket.onclose = () => {
+                    addLog('WebSocket connection closed');
+                };
+            });
+        }
+
+        // Start copying trades
+        async function startCopying() {
+            try {
+                state.error = null;
+
+                // Validate inputs
+                if (!state.masterToken.trim()) {
+                    throw new Error('Master token is required');
+                }
+
+                const followerTokensList = state.followerTokens
+                    .split(',')
+                    .map(token => token.trim())
+                    .filter(token => token.length > 0);
+
+                if (followerTokensList.length === 0) {
+                    throw new Error('At least one follower token is required');
+                }
+
+                state.connectionStatus = 'connecting';
+                addLog('Connecting to Deriv API...');
+                updateUI();
+
+                // Connect master account
+                state.masterSocket = await connectToDerivAPI(state.masterToken);
+
+                // Connect follower accounts
+                for (const token of followerTokensList) {
+                    try {
+                        state.followerSockets[token] = await connectToDerivAPI(token);
+                    } catch (error) {
+                        addLog(`Failed to connect follower account with token ${token.substring(0, 5)}...`);
+                    }
+                }
+
+                // Subscribe to transactions on master account
+                if (state.masterSocket) {
+                    state.masterSocket.send(JSON.stringify({
+                        transaction: 1,
+                        subscribe: 1
+                    }));
+
+                    state.masterSocket.onmessage = (msg) => {
+                        const data = JSON.parse(msg.data);
+
+                        // Handle transaction updates
+                        if (data.msg_type === 'transaction') {
+                            handleMasterTransaction(data.transaction);
+                        }
+                    };
+                }
+
+                state.connectionStatus = 'connected';
+                state.isConnected = true;
+                state.isCopying = true;
+                addLog('Copy trading started successfully');
+                updateUI();
+            } catch (error) {
+                state.error = error.message;
+                state.connectionStatus = 'error';
+                addLog(`Error: ${error.message}`);
+
+                // Clean up connections on error
+                if (state.masterSocket) {
+                    state.masterSocket.close();
+                    state.masterSocket = null;
+                }
+
+                Object.values(state.followerSockets).forEach(socket => socket.close());
+                state.followerSockets = {};
+
+                updateUI();
+            }
+        }
+
+        // Handle transaction from master account
+        function handleMasterTransaction(transaction) {
+            // Log the transaction
+            addLog(`Master transaction: ${transaction.action} ${transaction.amount} on ${transaction.symbol}`);
+
+            // Only copy buy/sell transactions
+            if (transaction.action === 'buy' || transaction.action === 'sell') {
+                // Add to history
+                addHistory({
+                    time: new Date().toISOString(),
+                    action: transaction.action,
+                    symbol: transaction.symbol,
+                    amount: transaction.amount
+                });
+
+                // Copy to all follower accounts
+                Object.values(state.followerSockets).forEach(socket => {
+                    // Calculate adjusted stake based on copy ratio and max stake
+                    let adjustedAmount = transaction.amount * state.copyRatio;
+                    if (adjustedAmount > state.maxStake) {
+                        adjustedAmount = state.maxStake;
+                    }
+
+                    // Create equivalent trade on follower account
+                    socket.send(JSON.stringify({
+                        buy: 1,
+                        price: adjustedAmount,
+                        parameters: {
+                            contract_type: transaction.contract_type,
+                            symbol: transaction.symbol,
+                            duration: transaction.duration,
+                            duration_unit: transaction.duration_unit,
+                            basis: 'stake'
+                        }
+                    }));
+
+                    addLog(`Copied trade to follower: ${adjustedAmount} on ${transaction.symbol}`);
+                });
+            }
+        }
+
+        // Stop copying trades
+        function stopCopying() {
+            // Close all WebSocket connections
+            if (state.masterSocket) {
+                state.masterSocket.close();
+                state.masterSocket = null;
+            }
+
+            Object.values(state.followerSockets).forEach(socket => socket.close());
+            state.followerSockets = {};
+
+            state.isConnected = false;
+            state.isCopying = false;
+            state.connectionStatus = 'disconnected';
+            addLog('Copy trading stopped');
+            updateUI();
+        }
+
+        // Initialize the application when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
